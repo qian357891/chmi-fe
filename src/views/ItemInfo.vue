@@ -65,8 +65,8 @@
           >
             <items />
           </div>
-          <p v-if="loading">Loading...</p>
-          <p v-if="noMore">No more</p>
+          <p v-if="loading">正在加载...</p>
+          <p v-if="noMore">没有更多了，回主页看看吧！</p>
         </div>
       </div>
     </footer>

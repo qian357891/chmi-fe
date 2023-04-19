@@ -33,6 +33,11 @@ const router = createRouter({
       ]
     },
     {
+      path: '/item-info',
+      name: 'itemInfo',
+      component: () => import('../views/ItemInfo.vue')
+    },
+    {
       path: '/chat',
       name: 'chat',
       component: () => import('../components/function/Chat.vue')
@@ -45,16 +50,15 @@ const router = createRouter({
     {
       path: '/chat-demo',
       name: 'chat-demo',
-      component: () => import('../components/function/demo/ChatDemo.vue'),
-      children: [
-        {
-          path: '1',
-          name: 'chat-demo1',
-          component: () => import('../components/function/demo/ChatDemo1.vue')
-        }
-      ]
+      component: () => import('../components/function/demo/ChatDemo.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  // 让页面回到顶部
+  document.documentElement.scrollTop = 0
+  next()
 })
 
 export default router

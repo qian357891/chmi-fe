@@ -1,34 +1,58 @@
-<!-- 聊天展示功能1 -->
 <template>
-  <div class="" style="width: 200px">
-    <div>
-      <input type="text" v-model="inputText" :disabled="whetherSend" />
+  <div>
+    <div class="common-layout">
+      <el-container>
+        <el-aside width="200px" style="background-color: black"></el-aside>
+        <el-container>
+          <el-main>
+            <main style="height: 600px">
+              <div v-for="(text, index) in textList" :key="index">
+                <div class="user">用户输入：{{ text }}</div>
+                <div class="bot">
+                  <TextPopping :text="text" />
+                </div>
+              </div>
+            </main>
+          </el-main>
+          <el-footer>
+            <footer>
+              <el-input
+                v-model="text"
+                :rows="2"
+                type="textarea"
+                @keyup.enter="submit"
+                placeholder="请输入您的症状"
+              />
+            </footer>
+          </el-footer>
+        </el-container>
+      </el-container>
     </div>
-    <span v-for="(char, index) in arr" :key="index">{{ char }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import TextPopping from '../TextPopping.vue'
+import { axiosPost } from '@/axios/api'
+const text = ref('')
+const textList = ref<string[]>([])
+const submit = () => {
+  textList.value.push(text.value)
 
-const inputText = ref('')
-const pushingText = ref(
-  `海外留学生同学如果因为时差无法参加本次笔试，可以等待下一次笔试。美团校招笔试安排在每周六，10点和19点交替进行（北京时间）`
-)
-const arr = ref<string[]>([])
-
-const currentChatIndex = ref(0)
-const whetherSend = ref(true)
-
-const timer = setInterval(() => {
-  if (currentChatIndex.value === pushingText.value.length) {
-    whetherSend.value = false
-    currentChatIndex.value = 0
-    clearInterval(timer)
-  }
-  arr.value.push(pushingText.value.charAt(currentChatIndex.value))
-  currentChatIndex.value++
-}, 100)
+  // 调接口，拿到值后传入TextPooping组件
+  // const botText= axiosPost('',text)
+  text.value = ''
+}
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.user {
+  background: #ffffff;
+  padding: 50px 200px;
+}
+.bot {
+  background-color: #f7f7f8;
+  padding: 50px 200px;
+}
+</style>

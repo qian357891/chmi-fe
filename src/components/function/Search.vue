@@ -2,42 +2,42 @@
   <div>
     <div class="search-container">
       <input
-        v-model="query"
+        v-model="stores.searchText"
         @keyup.enter="search"
         id="search-bar"
         type="text"
-        placeholder="输入您要搜索的中药材或者您的症状"
+        placeholder="请输入您的症状"
       />
       <a @click.once="search"
         ><img
           class="search-icon"
           src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"
       /></a>
+      <Camera />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, watchEffect } from 'vue'
-import { useDebouncedRef } from '../../fn/customFn'
+import { computed, ref, watchEffect } from 'vue'
 import router from '@/router'
+import { useStore } from '@/stores'
+import Camera from './Camera.vue'
+const stores = useStore()
 
-const query = useDebouncedRef('', 3000)
-
-const $boo = computed(() => {
-  return query.value != ''
-})
+const openCamera = () => {}
 
 const search = () => {
-  console.log(`您搜索了 ${query.value}`)
+  console.log(`您搜索了 ${stores.searchText}`)
   router.push({
     name: 'chat',
-    query: { content: query.value }
+    query: { content: stores.searchText }
   })
+  stores.searchText = ''
 }
 
 watchEffect((oninvalidate) => {
-  console.log(`用户现在输入框中的内容为：${query.value}`)
+  console.log(`用户现在输入框中的内容为：${stores.searchText}`)
 
   oninvalidate(() => {
     console.log('调用接口')

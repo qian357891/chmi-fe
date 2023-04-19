@@ -15,7 +15,7 @@
       </div>
       <div class="child">
         <el-check-tag
-          v-for="item in types"
+          v-for="item in tags"
           :key="item.id"
           :checked="item.selecting"
           @change="onChange(item)"
@@ -27,9 +27,12 @@
 </template>
 
 <script lang="ts" setup>
+import { axiosPost } from '@/axios/api'
+import { useStore } from '@/stores'
 import { ElMessage } from 'element-plus'
-import { ref, watch } from 'vue'
-interface Types {
+import { ref, watch, watchEffect } from 'vue'
+
+interface Tags {
   id: number
   name: string
   selecting: boolean
@@ -38,31 +41,27 @@ interface Types {
 const MAX_TAGS_NUMBER = 3
 const tagsNumber = ref(1)
 
-const onChange = (type: Types) => {
-  if (tagsNumber.value == MAX_TAGS_NUMBER && type.selecting == false) {
+const onChange = (tag: Tags) => {
+  if (tagsNumber.value == MAX_TAGS_NUMBER && tag.selecting == false) {
     typeTagsFull()
     return
   }
 
-  type.selecting = !type.selecting
-  if (type.selecting === true) {
-    addType(type)
+  tag.selecting = !tag.selecting
+  if (tag.selecting === true) {
+    addTag(tag)
   } else {
-    removeType(type)
+    removeTag(tag)
   }
 }
 
-watch(tagsNumber, () => {
-  console.log(tagsNumber.value)
-})
-
-const addType = (type: Types) => {
-  dynamicTags.value.push(type.name)
+const addTag = (tag: Tags) => {
+  dynamicTags.value.push(tag.name)
   tagsNumber.value++
 }
 
-const removeType = (type: Types) => {
-  const index = dynamicTags.value.indexOf(type.name)
+const removeTag = (tag: Tags) => {
+  const index = dynamicTags.value.indexOf(tag.name)
   if (index == -1) {
     return
   }
@@ -70,7 +69,7 @@ const removeType = (type: Types) => {
   tagsNumber.value--
 }
 
-const types = ref([
+const tags = ref([
   { id: 1, name: '类别1', selecting: true },
   { id: 2, name: '类别2', selecting: false },
   { id: 3, name: '类别3', selecting: false },
@@ -82,9 +81,24 @@ const types = ref([
 
 const dynamicTags = ref(['类别1'])
 
+// 当标签数量发生改变时，请求接口
+watchEffect((oninvalid) => {
+  console.log(`当前选中了${dynamicTags.value}`)
+  useStore().loading = true
+  // 这里做个防抖
+  const timer = setTimeout(() => {
+    console.log(`请求了接口，传入了${dynamicTags.value}`)
+    useStore().loading = false
+    //axiosPost('', dynamicTags.value)
+  }, 1000)
+  oninvalid(() => {
+    clearInterval(timer)
+  })
+})
+
 const handleClose = (tag: string) => {
   dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
-  types.value.forEach((ele) => {
+  tags.value.forEach((ele) => {
     if (ele.name == tag) {
       ele.selecting = !ele.selecting
       tagsNumber.value--
@@ -95,7 +109,7 @@ const handleClose = (tag: string) => {
 const typeTagsFull = () => {
   ElMessage({
     showClose: true,
-    message: 'Warning, this is a warning message.',
+    message: '最多只能选择3个标签！',
     type: 'warning'
   })
 }

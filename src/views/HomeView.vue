@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Search from '../components/function/Search.vue'
-import TypeSelect from './tag/TypeSelect.vue'
+import AboutView from './AboutView.vue'
 </script>
 
 <template>
@@ -14,44 +13,23 @@ import TypeSelect from './tag/TypeSelect.vue'
       <main class="search">
         <Search />
       </main>
-      <div class="tab">
-        <TypeSelect />
-      </div>
+      <el-upload class="upload-demo" drag action="" multiple>
+        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <div class="el-upload__text">将图片拖到这里 或者 <em>点击上传图片</em></div>
+        <template #tip>
+          <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+        </template>
+      </el-upload>
     </section>
 
     <!-- Main -->
-    <main class=""></main>
+    <main class="">
+      <AboutView />
+    </main>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.tab {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  width: 100%;
-
-  .tab-item {
-    flex-basis: calc(10% - 20px);
-    text-align: center;
-    padding: 10px;
-    margin: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: #f1f1f1;
-    }
-
-    &.active {
-      background-color: #007bff;
-      color: #fff;
-    }
-  }
-}
-
-//
-
 .search {
   height: 40%;
   display: flex;
@@ -73,7 +51,6 @@ a {
   align-items: center;
   height: 100vh;
   position: relative;
-  background: #eee;
   text-align: center;
   padding: 0 2em;
   h1 {
