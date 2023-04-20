@@ -49,10 +49,19 @@ import TypeSelect from './tag/TypeSelect.vue'
 import Items from './Items.vue'
 import { useStore } from '../stores/index'
 import router from '@/router'
+import { ElMessage } from 'element-plus'
 
 const stores = useStore()
 
 const search = () => {
+  if (stores.searchText == '') {
+    ElMessage({
+      showClose: true,
+      message: '不能输入空字符串！',
+      type: 'warning'
+    })
+    return
+  }
   console.log(`您搜索了 ${stores.searchText}`)
   router.push({
     name: 'chat',

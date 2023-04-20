@@ -9,9 +9,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Camera: typeof import('./src/components/function/Camera.vue')['default']
-    Chat: typeof import('./src/components/function/Chat.vue')['default']
-    ChatDemo: typeof import('./src/components/function/demo/ChatDemo.vue')['default']
+    Camera: typeof import('./src/components/utils/Camera.vue')['default']
+    Chat: typeof import('./src/components/utils/Chat.vue')['default']
+    ChatDemo: typeof import('./src/components/demo/ChatDemo.vue')['default']
     ChatDemo1: typeof import('./src/components/function/demo/ChatDemo1.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
@@ -36,8 +36,8 @@ declare module '@vue/runtime-core' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Search: typeof import('./src/components/function/Search.vue')['default']
-    TextPopping: typeof import('./src/components/function/TextPopping.vue')['default']
+    Search: typeof import('./src/components/utils/Search.vue')['default']
+    TextPopping: typeof import('./src/components/utils/TextPopping.vue')['default']
   }
   export interface ComponentCustomProperties {
     vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']

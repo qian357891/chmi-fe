@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Search from '../components/function/Search.vue'
+import Search from '../components/utils/Search.vue'
 import AboutView from './AboutView.vue'
 </script>
 

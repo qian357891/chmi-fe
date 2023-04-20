@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Demo from '../views/Demo.vue'
 import HomeView from '@/views/HomeView.vue'
+import BackGround from '@/views/BackGround.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,29 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'index',
-      component: HomeView,
-      children: [
-        {
-          path: 'classification',
-          name: 'demo',
-          component: Demo
-        },
-        {
-          path: 'common-symptom',
-          name: 'demo',
-          component: Demo
-        },
-        {
-          path: 'tab-1',
-          name: 'demo',
-          component: Demo
-        },
-        {
-          path: 'tab-2',
-          name: 'demo',
-          component: Demo
-        }
-      ]
+      component: BackGround
     },
     {
       path: '/item-info',
@@ -40,17 +18,17 @@ const router = createRouter({
     {
       path: '/chat',
       name: 'chat',
-      component: () => import('../components/function/Chat.vue')
+      component: () => import('../components/utils/Chat.vue')
     },
     {
       path: '/demo',
       name: 'demo',
-      component: () => import('../views/Demo.vue')
+      component: () => import('../views/BackGround.vue')
     },
     {
       path: '/chat-demo',
       name: 'chat-demo',
-      component: () => import('../components/function/demo/ChatDemo.vue')
+      component: () => import('../components/demo/ChatDemo.vue')
     }
   ]
 })

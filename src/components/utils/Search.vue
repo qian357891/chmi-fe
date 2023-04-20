@@ -8,7 +8,7 @@
         type="text"
         placeholder="请输入您的症状"
       />
-      <a @click.once="search"
+      <a @click="search"
         ><img
           class="search-icon"
           src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"
@@ -23,11 +23,18 @@ import { computed, ref, watchEffect } from 'vue'
 import router from '@/router'
 import { useStore } from '@/stores'
 import Camera from './Camera.vue'
+import { ElMessage } from 'element-plus'
 const stores = useStore()
 
-const openCamera = () => {}
-
 const search = () => {
+  if (stores.searchText == '') {
+    ElMessage({
+      showClose: true,
+      message: '不能输入空字符串！',
+      type: 'warning'
+    })
+    return
+  }
   console.log(`您搜索了 ${stores.searchText}`)
   router.push({
     name: 'chat',
