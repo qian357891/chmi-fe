@@ -78,6 +78,10 @@ const search = () => {
     })
     return
   }
+  if (stores.searchText.length <= 5) {
+    router.push({ name: 'searchedItems', query: { item: stores.searchText } })
+    return
+  }
   console.log(`您搜索了 ${stores.searchText}`)
   router.push({
     name: 'chat',
