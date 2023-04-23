@@ -38,24 +38,35 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import TextPopping from '../utils/TextPopping.vue'
-import { axiosPost } from '@/axios/api'
+import { axiosGet } from '@/axios/api'
 import { useRoute } from 'vue-router'
+import { axiosConfig } from '@/axios/axios.config'
 
 const route = useRoute()
 
 const { content } = route.query as { content: string }
 
+const firstText: BotText = (await axiosGet(`${axiosConfig.chat}?ask=${content}`)).data
+console.log(firstText)
+
 const text = ref('')
 const textList = ref<string[]>([])
-const botText = ref(`调用接口，传入参数：${content}`)
+const botText = ref(firstText.data)
 
 textList.value.push(content)
 
-const submit = () => {
+interface BotText {
+  msg: string
+  code: number
+  data: string
+}
+
+const submit = async () => {
+  const _botText: BotText = (await axiosGet(`${axiosConfig.chat}?ask=${text.value}`)).data
+  botText.value = _botText.data
+
   textList.value.push(text.value)
-  botText.value = `调用接口，传入：${text.value}`
-  // 调接口，拿到值后传入TextPooping组件
-  // const botText= axiosPost('',text)
+
   text.value = ''
 }
 </script>
@@ -68,18 +79,5 @@ const submit = () => {
 .bot {
   background-color: #f7f7f8;
   padding: 50px 200px;
-}
-.btn {
-  display: flex;
-  justify-content: center;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  color: #ffffff;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    background: #2a2b32;
-  }
 }
 </style>

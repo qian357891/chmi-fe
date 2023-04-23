@@ -27,10 +27,12 @@
 </template>
 
 <script lang="ts" setup>
-import { axiosGet, axiosPost } from '@/axios/api'
+import { axiosGet } from '@/axios/api'
+import { axiosConfig } from '@/axios/axios.config'
 import { useStore } from '@/stores'
 import { ElMessage } from 'element-plus'
-import { ref, watch, watchEffect } from 'vue'
+import { dataType } from 'element-plus/es/components/table-v2/src/common'
+import { ref, watchEffect, type Ref } from 'vue'
 
 interface Tags {
   id: number
@@ -38,11 +40,11 @@ interface Tags {
   selecting: boolean
 }
 
-const MAX_TAGS_NUMBER = 3
+const MAX_TAGS_NUMBER = 5
 const tagsNumber = ref(1)
 
 const onChange = (tag: Tags) => {
-  if (tagsNumber.value == MAX_TAGS_NUMBER && tag.selecting == false) {
+  if (tagsNumber.value == MAX_TAGS_NUMBER + 1 && tag.selecting == false) {
     typeTagsFull()
     return
   }
@@ -69,28 +71,43 @@ const removeTag = (tag: Tags) => {
   tagsNumber.value--
 }
 
-const tags = ref([
-  { id: 1, name: '类别1', selecting: true },
-  { id: 2, name: '类别2', selecting: false },
-  { id: 3, name: '类别3', selecting: false },
-  { id: 4, name: '类别4', selecting: false },
-  { id: 5, name: '类别5', selecting: false },
-  { id: 6, name: '类别6', selecting: false },
-  { id: 7, name: '类别7', selecting: false }
-])
+const tags: Ref<Tags[]> = ref([])
 
-const dynamicTags = ref(['类别1'])
+// 拿到初始数据，遍历push进数组
+const _tags = (await axiosGet(axiosConfig.getTags)).data
+let i = 0
+for (const Tag in _tags.data) {
+  for (const tag of _tags.data[Tag]) {
+    tags.value.push({
+      id: ++i,
+      name: tag,
+      selecting: false
+    })
+  }
+}
+
+const store = useStore()
+
+const dynamicTags: Ref<string[]> = ref([])
 
 // 当标签数量发生改变时，请求接口
 watchEffect((oninvalid) => {
   console.log(`当前选中了${dynamicTags.value}`)
+
   useStore().loading = true
   // 这里做个防抖
-  const timer = setTimeout(() => {
-    console.log(`请求了接口，传入了${dynamicTags.value}`)
+  const timer = setTimeout(async () => {
+    if (dynamicTags.value[0] == null) {
+      // 没有选标签调用all
+      store.showPreMedicinalInfo = (await axiosGet(axiosConfig.selectAll)).data
+    } else {
+      // 选标签调用SelectByTags
+      store.showPreMedicinalInfo = (
+        await axiosGet(`${axiosConfig.selectByType}?checkItems=${dynamicTags.value}`)
+      ).data
+      console.log(store.showPreMedicinalInfo)
+    }
     useStore().loading = false
-
-    //axiosPost('', dynamicTags.value)
   }, 1000)
   oninvalid(() => {
     clearInterval(timer)
@@ -110,7 +127,7 @@ const handleClose = (tag: string) => {
 const typeTagsFull = () => {
   ElMessage({
     showClose: true,
-    message: '最多只能选择3个标签！',
+    message: `最多只能选择${MAX_TAGS_NUMBER}个标签！`,
     type: 'warning'
   })
 }
@@ -127,5 +144,9 @@ const typeTagsFull = () => {
 }
 .child > * {
   margin-right: 10px;
+}
+
+:deep(.el-check-tag) {
+  margin-bottom: 10px;
 }
 </style>

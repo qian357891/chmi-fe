@@ -9,7 +9,7 @@ interface PreMedicinalInfo {
   name: string
   distribution: string
   effect: string
-  img?: string
+  img: string[]
 }
 
 export type { ManyPreMedicinalInfo, PreMedicinalInfo }

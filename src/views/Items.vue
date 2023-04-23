@@ -1,5 +1,5 @@
 <template>
-  <el-space class="pointer" direction="vertical" alignment="flex-start">
+  <el-space @click="openInfo(item.id)" class="pointer" direction="vertical" alignment="flex-start">
     <el-skeleton style="width: 240px" :loading="useStore().loading" animated>
       <template #template>
         <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
@@ -27,9 +27,14 @@
 </template>
 
 <script lang="ts" setup>
+import router from '@/router'
 import { useStore } from '@/stores'
 
-let { img, name, effect } = defineProps(['img', 'name', 'effect'])
+let { img, name, effect, item } = defineProps(['img', 'name', 'effect', 'item'])
+
+const openInfo = (name: string) => {
+  router.push({ path: '/item-info', query: { name } })
+}
 </script>
 
 <style lang="scss" scoped>

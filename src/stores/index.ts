@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const useStore = defineStore('main', {
   state: () => {
     return {
-      loading: true,
+      loading: false,
       searchText: '',
       cameraActive: false,
       showPreMedicinalInfo: {} as ManyPreMedicinalInfo

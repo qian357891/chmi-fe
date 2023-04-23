@@ -26,9 +26,14 @@ const router = createRouter({
       component: () => import('../views/BackGround.vue')
     },
     {
-      path: '/chat-demo',
-      name: 'chat-demo',
-      component: () => import('../components/demo/ChatDemo.vue')
+      path: '/searched-items',
+      name: 'searchedItems',
+      component: () => import('../views/SearchedItems.vue')
+    },
+    {
+      path: '/pic-identify',
+      name: 'picIdentify',
+      component: () => import('../views/PicIdentify.vue')
     }
   ]
 })

@@ -1,82 +1,103 @@
 <template>
   <div>
-    <div class="wrap">
-      <div>
-        <div class="demo-image__preview">
-          <el-image
-            style="width: 300px; height: 300px"
-            :src="url"
-            :zoom-rate="1.2"
-            :preview-src-list="srcList"
-            :initial-index="4"
-            fit="cover"
-          />
+    <el-container>
+      <el-aside width="200px" style="background-color: black">
+        <div>
+          <RouterLink to="/" class="btn">首页</RouterLink>
         </div>
-        <span>点击图像查看大图</span>
-      </div>
+      </el-aside>
+      <el-container>
+        <el-main style="height: 700px">
+          <div>
+            <div class="wrap">
+              <div>
+                <div class="demo-image__preview">
+                  <el-image
+                    style="width: 300px; height: 300px"
+                    :src="url"
+                    :zoom-rate="1.2"
+                    :preview-src-list="srcList"
+                    :initial-index="4"
+                    fit="cover"
+                  />
+                </div>
+                <span>点击图像查看大图</span>
+              </div>
 
-      <div class="preInfo">
-        <el-descriptions direction="vertical" :column="4" border>
-          <el-descriptions-item label="药材名">{{ info.name }}</el-descriptions-item>
-          <el-descriptions-item label="别名">
-            {{ info.alias }}
-          </el-descriptions-item>
-          <el-descriptions-item label="类型" :span="2">{{ info.type }}</el-descriptions-item>
-          <el-descriptions-item label="禁忌">
-            {{ info.taboo }}
-          </el-descriptions-item>
-          <el-descriptions-item label="药效">{{ info.effect }} </el-descriptions-item>
-          <el-descriptions-item label="用量">{{ info.usage }} </el-descriptions-item>
-          <el-descriptions-item label="推荐公式">{{ info.formula }}</el-descriptions-item>
-        </el-descriptions>
-      </div>
-    </div>
-    <main style="display: flex; flex-direction: column; align-items: center">
-      <div style="width: 1000px">
-        <div>
-          <label>形态</label>
-          <p>{{ info.morphology }}</p>
-        </div>
-        <div>
-          <label>分布</label>
-          <p>{{ info.distribution }}</p>
-        </div>
-        <div>
-          <label>分布</label>
-          <p>{{ info.distribution }}</p>
-        </div>
-        <div>
-          <label>处理</label>
-          <p>{{ info.processing }}</p>
-        </div>
-        <div>
-          <label>特征</label>
-          <p>{{ info.properties }}</p>
-        </div>
-        <div>
-          <label>成分</label>
-          <p>{{ info.constituent }}</p>
-        </div>
-      </div>
-    </main>
-    <footer style="display: flex; align-items: center; flex-direction: column">
-      <h1>为您推荐</h1>
-      <el-divider />
-      <div>
-        <div class="infinite-list-wrapper" style="overflow: auto">
-          <div
-            v-for="i in count"
-            :key="i"
-            v-infinite-scroll="load"
-            :infinite-scroll-disabled="disabled"
-          >
-            <items />
+              <div class="preInfo">
+                <el-descriptions direction="vertical" :column="4" border>
+                  <el-descriptions-item label="药材名">{{ info.name }}</el-descriptions-item>
+                  <el-descriptions-item label="别名">
+                    {{ info.alias }}
+                  </el-descriptions-item>
+                  <el-descriptions-item label="类型" :span="2">{{
+                    info.type
+                  }}</el-descriptions-item>
+                  <el-descriptions-item label="禁忌">
+                    {{ info.taboo }}
+                  </el-descriptions-item>
+                  <el-descriptions-item label="药效">{{ info.effect }} </el-descriptions-item>
+                  <el-descriptions-item label="用量">{{ info.usage }} </el-descriptions-item>
+                  <el-descriptions-item label="推荐公式">{{ info.formula }}</el-descriptions-item>
+                </el-descriptions>
+              </div>
+            </div>
+            <main style="display: flex; flex-direction: column; align-items: center">
+              <div style="width: 1000px">
+                <div>
+                  <label>形态</label>
+                  <p>{{ info.morphology }}</p>
+                </div>
+                <div>
+                  <label>分布</label>
+                  <p>{{ info.distribution }}</p>
+                </div>
+                <div>
+                  <label>分布</label>
+                  <p>{{ info.distribution }}</p>
+                </div>
+                <div>
+                  <label>处理</label>
+                  <p>{{ info.processing }}</p>
+                </div>
+                <div>
+                  <label>特征</label>
+                  <p>{{ info.properties }}</p>
+                </div>
+                <div>
+                  <label>成分</label>
+                  <p>{{ info.constituent }}</p>
+                </div>
+              </div>
+            </main>
+            <footer style="display: flex; align-items: center; flex-direction: column">
+              <h1>为您推荐</h1>
+              <el-divider />
+              <div>
+                <div class="infinite-list-wrapper" style="overflow: auto">
+                  <div
+                    v-for="recommend in data.recommend"
+                    :key="recommend.id"
+                    v-infinite-scroll="load"
+                    :infinite-scroll-disabled="disabled"
+                  >
+                    <items
+                      :img="recommend.img[0]"
+                      :name="recommend.name"
+                      :effect="recommend.effect"
+                      :item="recommend"
+                      style="margin-bottom: 20px"
+                    />
+                  </div>
+                  <p v-if="loading">正在加载...</p>
+                  <p v-if="noMore">没有更多了，回主页看看吧！</p>
+                </div>
+              </div>
+            </footer>
           </div>
-          <p v-if="loading">正在加载...</p>
-          <p v-if="noMore">没有更多了，回主页看看吧！</p>
-        </div>
-      </div>
-    </footer>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
@@ -88,9 +109,6 @@ import { useRoute } from 'vue-router'
 import { axiosGet } from '@/axios/api'
 import { axiosConfig } from '@/axios/axios.config'
 import type { ReqMedicinalInfo } from '@/entry/MedicinalInfo'
-
-const url = 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
-const srcList = ['https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg']
 
 const count = ref(2)
 const loading = ref(false)
@@ -108,7 +126,9 @@ const route = useRoute()
 const { id } = route.query
 const data: ReqMedicinalInfo = (await axiosGet(`${axiosConfig.selectById}?id=${id}`)).data
 const info = data.data
-console.log(data)
+
+const url = info.img[0]
+const srcList = info.img
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,16 @@
 <script setup lang="ts">
+import { axiosConfig } from '@/axios/axios.config'
 import Search from '../components/utils/Search.vue'
 import AboutView from './AboutView.vue'
+
+import router from '@/router'
+import type { UploadFile, UploadFiles } from 'element-plus'
+
+const action = axiosConfig.rootUrl + axiosConfig.picIdentification
+
+const success = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  router.push({ name: 'picIdentify', query: { resp: JSON.stringify(response) } })
+}
 </script>
 
 <template>
@@ -13,7 +23,14 @@ import AboutView from './AboutView.vue'
       <main class="search">
         <Search />
       </main>
-      <el-upload class="upload-demo" drag action="" multiple>
+      <el-upload
+        class="upload-demo"
+        drag
+        :action="action"
+        :limit="1"
+        :on-success="success"
+        multiple
+      >
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
         <div class="el-upload__text">将图片拖到这里 或者 <em>点击上传图片</em></div>
         <template #tip>

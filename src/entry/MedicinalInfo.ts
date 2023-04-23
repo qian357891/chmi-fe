@@ -22,7 +22,7 @@ interface MedicinalInfo {
   formula: string
   pharmacology: string
   taboo: string
-  img: string
+  img: string[]
 }
 
 export type { ReqMedicinalInfo }

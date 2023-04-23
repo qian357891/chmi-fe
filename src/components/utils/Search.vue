@@ -6,7 +6,7 @@
         @keyup.enter="search"
         id="search-bar"
         type="text"
-        placeholder="请输入您的症状"
+        placeholder="请输入您的症状或者想要查找的药材"
       />
       <a @click="search"
         ><img
@@ -24,6 +24,8 @@ import router from '@/router'
 import { useStore } from '@/stores'
 import Camera from './Camera.vue'
 import { ElMessage } from 'element-plus'
+import { useRoute } from 'vue-router'
+
 const stores = useStore()
 
 const search = () => {
@@ -33,6 +35,10 @@ const search = () => {
       message: '不能输入空字符串！',
       type: 'warning'
     })
+    return
+  }
+  if (stores.searchText.length <= 5) {
+    router.push({ name: 'searchedItems', query: { item: stores.searchText } })
     return
   }
   console.log(`您搜索了 ${stores.searchText}`)

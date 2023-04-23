@@ -1,7 +1,10 @@
 export const axiosConfig = {
   rootUrl: 'https://mock.apifox.cn/m2/2619667-0-default',
-  allPreMedicinalInfo: '/76578646',
-  selectByType: '/76580199',
-  selectById: '/76577990',
-  getTags: '/76575245'
+  selectAll: '/77465116',
+  selectByType: '/77465146',
+  selectByName: '/77464765',
+  selectById: '/77464765',
+  getTags: '/77464786',
+  chat: '/77465379',
+  picIdentification: '/77465598'
 }

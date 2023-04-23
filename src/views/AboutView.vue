@@ -25,18 +25,22 @@
                   </div>
                 </header>
               </el-header>
-              <el-main>
+              <el-main style="height: 200px">
                 <TypeSelect />
               </el-main>
               <el-footer>
                 <footer>
-                  <div v-for="item in data.data" :key="item.id" style="display: inline">
+                  <div
+                    v-for="item in stores.showPreMedicinalInfo.data"
+                    :key="item.id"
+                    style="display: inline"
+                  >
                     <Items
+                      :item="item"
                       :name="item.name"
                       :effect="item.effect"
-                      :img="item.img"
+                      :img="item!.img[0]"
                       style="margin: 20px"
-                      @click="openInfo(item.id)"
                     />
                   </div>
                 </footer>
@@ -58,10 +62,11 @@ import router from '@/router'
 import { ElMessage } from 'element-plus'
 import { axiosGet } from '@/axios/api'
 import type { ManyPreMedicinalInfo } from '@/entry/PreMedicinalInfo'
+import { axiosConfig } from '@/axios/axios.config'
 
 const stores = useStore()
 
-const data: ManyPreMedicinalInfo = (await axiosGet('/76578646')).data
+const data: ManyPreMedicinalInfo = (await axiosGet(axiosConfig.selectAll)).data
 stores.showPreMedicinalInfo = data
 
 const search = () => {
@@ -79,10 +84,6 @@ const search = () => {
     query: { content: stores.searchText }
   })
   stores.searchText = ''
-}
-
-const openInfo = (id: string) => {
-  router.push({ path: '/item-info', query: { id } })
 }
 
 const nextPageRef = ref<HTMLElement | null>(null)
