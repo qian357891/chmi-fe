@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { axiosPost } from '@/axios/api'
+import { axiosGet, axiosPost } from '@/axios/api'
 import { useStore } from '@/stores'
 import { ElMessage } from 'element-plus'
 import { ref, watch, watchEffect } from 'vue'
@@ -89,6 +89,7 @@ watchEffect((oninvalid) => {
   const timer = setTimeout(() => {
     console.log(`请求了接口，传入了${dynamicTags.value}`)
     useStore().loading = false
+
     //axiosPost('', dynamicTags.value)
   }, 1000)
   oninvalid(() => {

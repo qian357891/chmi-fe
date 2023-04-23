@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { axiosConfig } from './axios.config'
 
 // 创建实例
 const axiosInstance = axios.create({
-  baseURL: 'http://xxx.xx:xxxx'
+  baseURL: axiosConfig.rootUrl
 })
 
 // 添加请求拦截器

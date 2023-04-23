@@ -1,3 +1,4 @@
+import type { ManyPreMedicinalInfo } from '@/entry/PreMedicinalInfo'
 import { defineStore } from 'pinia'
 
 export const useStore = defineStore('main', {
@@ -5,7 +6,8 @@ export const useStore = defineStore('main', {
     return {
       loading: true,
       searchText: '',
-      cameraActive: false
+      cameraActive: false,
+      showPreMedicinalInfo: {} as ManyPreMedicinalInfo
     }
   },
   actions: {}

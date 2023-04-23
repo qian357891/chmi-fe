@@ -30,8 +30,14 @@
               </el-main>
               <el-footer>
                 <footer>
-                  <div v-for="item in 10" :key="item" style="display: inline">
-                    <Items style="margin: 20px" @click="openInfo" />
+                  <div v-for="item in data.data" :key="item.id" style="display: inline">
+                    <Items
+                      :name="item.name"
+                      :effect="item.effect"
+                      :img="item.img"
+                      style="margin: 20px"
+                      @click="openInfo(item.id)"
+                    />
                   </div>
                 </footer>
               </el-footer>
@@ -50,8 +56,13 @@ import Items from './Items.vue'
 import { useStore } from '../stores/index'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
+import { axiosGet } from '@/axios/api'
+import type { ManyPreMedicinalInfo } from '@/entry/PreMedicinalInfo'
 
 const stores = useStore()
+
+const data: ManyPreMedicinalInfo = (await axiosGet('/76578646')).data
+stores.showPreMedicinalInfo = data
 
 const search = () => {
   if (stores.searchText == '') {
@@ -70,8 +81,8 @@ const search = () => {
   stores.searchText = ''
 }
 
-const openInfo = () => {
-  router.push({ path: '/item-info' })
+const openInfo = (id: string) => {
+  router.push({ path: '/item-info', query: { id } })
 }
 
 const nextPageRef = ref<HTMLElement | null>(null)

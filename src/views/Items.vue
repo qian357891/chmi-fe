@@ -5,30 +5,19 @@
         <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
         <div style="padding: 14px">
           <el-skeleton-item variant="h3" style="width: 50%" />
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              justify-items: space-between;
-              margin-top: 16px;
-              height: 16px;
-            "
-          >
+          <div class="el-items">
             <el-skeleton-item variant="text" style="margin-right: 16px" />
             <el-skeleton-item variant="text" style="width: 30%" />
           </div>
         </div>
       </template>
       <template #default>
-        <el-card :body-style="{ padding: '0px', marginBottom: '1px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
+        <el-card :body-style="{ padding: '0px', marginBottom: '1px' }" class="wrap">
+          <el-image style="width: 240px; height: 240px" :src="img" class="image" lazy />
           <div class="pre-info" style="padding: 14px">
-            <span>Delicious hamburger</span>
+            <span>{{ name }}</span>
             <div class="bottom card-header">
-              <div class="time">{{ currentDate }}</div>
+              <div :title="effect" class="text">{{ effect }}</div>
             </div>
           </div>
         </el-card>
@@ -40,11 +29,34 @@
 <script lang="ts" setup>
 import { useStore } from '@/stores'
 
-const currentDate = new Date().toDateString()
+let { img, name, effect } = defineProps(['img', 'name', 'effect'])
 </script>
 
 <style lang="scss" scoped>
 .pointer {
   cursor: pointer;
+  &:hover {
+    box-shadow: 5px 5px 5px 5px rgb(206, 206, 206);
+    transform: translate(0, 0);
+    transition: all 0.2s ease-in 0s;
+  }
+}
+// 展示框的padding修改
+:deep(.el-space__item) {
+  padding: 0px !important;
+}
+.el-items {
+  overflow: hidden;
+}
+.wrap {
+  width: 240px;
+  height: 335px;
+}
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 </style>

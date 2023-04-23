@@ -1,7 +1,11 @@
 <template>
   <div class="index">
-    <el-backtop :right="100" :bottom="100" />
-    <RouterView />
+    <Suspense>
+      <div>
+        <el-backtop :right="100" :bottom="100" />
+        <RouterView />
+      </div>
+    </Suspense>
   </div>
 </template>
 
