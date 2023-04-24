@@ -124,7 +124,7 @@ const load = () => {
 
 const route = useRoute()
 const { id } = route.query
-const data: ReqMedicinalInfo = (await axiosGet(`${axiosConfig.selectById}?id=${id}`)).data
+const data: ReqMedicinalInfo = (await axiosGet(`${axiosConfig.selectById}?itemId=${id}`)).data
 const info = data.data
 
 const url = info.img[0]

@@ -32,8 +32,8 @@ import { useStore } from '@/stores'
 
 let { img, name, effect, item } = defineProps(['img', 'name', 'effect', 'item'])
 
-const openInfo = (name: string) => {
-  router.push({ path: '/item-info', query: { name } })
+const openInfo = (id: string) => {
+  router.push({ path: '/item-info', query: { id } })
 }
 </script>
 

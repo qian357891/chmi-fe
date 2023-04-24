@@ -32,7 +32,7 @@
                   :infinite-scroll-disabled="disabled"
                 >
                   <items
-                    :img="recommend.img"
+                    :img="recommend.img[0]"
                     :name="recommend.name"
                     :effect="recommend.effect"
                     :item="recommend"

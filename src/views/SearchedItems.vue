@@ -14,7 +14,7 @@
             <h1>您可能想找</h1>
             <el-divider />
             <Items
-              :img="info.data.img"
+              :img="info.data.img[0]"
               :name="info.data.name"
               :effect="info.data.effect"
               :item="info.data"
@@ -32,7 +32,7 @@
                   :infinite-scroll-disabled="disabled"
                 >
                   <items
-                    :img="recommend.img"
+                    :img="recommend.img[0]"
                     :name="recommend.name"
                     :effect="recommend.effect"
                     :item="recommend"
@@ -57,8 +57,11 @@ import Items from './Items.vue'
 import type { SearchedInfo } from '../entry/SearchedInfo'
 import Search from '@/components/utils/Search.vue'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const { item } = defineProps(['item'])
+// const { item } = defineProps(['item'])
+const route = useRoute()
+const {item} = route.query
 
 const info: SearchedInfo = (await axiosGet(`${axiosConfig.selectByName}?item=${item}`)).data
 
