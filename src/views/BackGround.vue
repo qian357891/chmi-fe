@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import HomeView from './HomeView.vue'
+const url =
+  'https://prod-streaming-video-msn-com.akamaized.net/49a16a97-2dfb-4296-90f4-12459a46d5d5/c5fc2d44-2573-4fff-99d7-c863763063e6.mp4'
 </script>
 
 <template>
@@ -11,7 +13,7 @@ import HomeView from './HomeView.vue'
         loop
         playsinline
         autoplay
-        src="https://prod-streaming-video-msn-com.akamaized.net/49a16a97-2dfb-4296-90f4-12459a46d5d5/c5fc2d44-2573-4fff-99d7-c863763063e6.mp4"
+        src="../../medicine-video.mp4"
         tabindex="-1"
         muted="false"
       ></video>

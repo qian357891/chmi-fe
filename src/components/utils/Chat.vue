@@ -2,16 +2,19 @@
   <div>
     <div class="common-layout">
       <el-container>
-        <el-aside width="200px" style="background-color: black">
-          <div>
-            <RouterLink to="/" class="btn">首页</RouterLink>
-          </div>
+        <el-aside width="200px">
+          <SideBar />
         </el-aside>
         <el-container>
           <el-main>
             <main style="height: 600px">
               <div v-for="(text, index) in textList" :key="index">
-                <div class="user">用户输入：{{ text }}</div>
+                <div class="user chat">
+                  <div>
+                    <el-icon :size="40"><Avatar /></el-icon>
+                  </div>
+                  <span>{{ text }}</span>
+                </div>
                 <div class="bot">
                   <TextPopping :text="botText" />
                 </div>
@@ -41,19 +44,22 @@ import TextPopping from '../utils/TextPopping.vue'
 import { axiosGet } from '@/axios/api'
 import { useRoute } from 'vue-router'
 import { axiosConfig } from '@/axios/axios.config'
+import SideBar from '@/views/side-bar/SideBar.vue'
+import { Avatar } from '@element-plus/icons-vue'
 
 const route = useRoute()
 
 const { content } = route.query as { content: string }
 
 const firstText: BotText = (await axiosGet(`${axiosConfig.chat}?ask=${content}`)).data
-console.log(firstText)
 
 const text = ref('')
 const textList = ref<string[]>([])
 const botText = ref(firstText.data)
 
-textList.value.push(content)
+if (content != '') {
+  textList.value.push(content)
+}
 
 interface BotText {
   msg: string

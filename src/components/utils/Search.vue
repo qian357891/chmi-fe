@@ -13,7 +13,8 @@
           class="search-icon"
           src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"
       /></a>
-      <Camera />
+      <!-- <Camera /> -->
+      <CameraIcon />
     </div>
   </div>
 </template>
@@ -25,6 +26,7 @@ import { useStore } from '@/stores'
 import Camera from './Camera.vue'
 import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
+import CameraIcon from '../../views/upload/CameraIcon.vue'
 
 const stores = useStore()
 

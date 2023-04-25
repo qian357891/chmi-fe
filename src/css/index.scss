@@ -1,0 +1,12 @@
+a {
+	text-decoration: none; 
+	outline: none;	
+	color: #000;	
+}
+
+.chat{
+  display: flex;
+	div:first-child{
+		margin-right: 40px
+	}
+}

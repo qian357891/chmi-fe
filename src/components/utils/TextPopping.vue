@@ -1,11 +1,17 @@
 <!-- 聊天展示功能1 -->
 <template>
-  <div class="">
-    机器人：<span v-for="(char, index) in arr" :key="index">{{ char }}</span>
+  <div class="chat">
+    <div style="">
+      <img src="../icons/boot.svg" width="40" />
+    </div>
+    <div>
+      <span v-for="(char, index) in arr" :key="index">{{ char }}</span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Platform } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 
 const props = defineProps(['text'])

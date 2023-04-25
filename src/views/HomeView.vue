@@ -1,42 +1,20 @@
 <script setup lang="ts">
-import { axiosConfig } from '@/axios/axios.config'
 import Search from '../components/utils/Search.vue'
 import AboutView from './AboutView.vue'
-
-import router from '@/router'
-import type { UploadFile, UploadFiles } from 'element-plus'
-
-const action = axiosConfig.rootUrl + axiosConfig.picIdentification
-
-const success = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
-  router.push({ name: 'picIdentify', query: { resp: JSON.stringify(response) } })
-}
 </script>
 
 <template>
   <div>
     <!-- Hero -->
     <section class="et-hero-tabs">
-      <h1>智慧中草药识别推荐系统</h1>
-      <h3>Wisdom Chinese herbal medicine identification and recommendation system</h3>
+      <h1>
+        <img src="../components/icons/boot.svg" width="80" style="position: relative; top: 10px" />
+        <span> AI养生宝</span>
+      </h1>
       <!-- 搜索框 -->
       <main class="search">
         <Search />
       </main>
-      <el-upload
-        class="upload-demo"
-        drag
-        :action="action"
-        :limit="1"
-        :on-success="success"
-        multiple
-      >
-        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-        <div class="el-upload__text">将图片拖到这里 或者 <em>点击上传图片</em></div>
-        <template #tip>
-          <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-        </template>
-      </el-upload>
     </section>
 
     <!-- Main -->
@@ -71,14 +49,9 @@ a {
   text-align: center;
   padding: 0 2em;
   h1 {
-    font-size: 2rem;
-    margin: 0;
-    letter-spacing: 1rem;
-  }
-  h3 {
     font-size: 1rem;
     letter-spacing: 0.3rem;
-    opacity: 0.6;
+    opacity: 0.65;
   }
 }
 

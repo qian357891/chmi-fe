@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div>
     <Suspense>
       <div>
         <el-backtop :right="100" :bottom="100" />
