@@ -8,6 +8,7 @@
         <el-container>
           <el-main>
             <main style="height: 600px">
+              <PromptCard />
               <div v-for="(text, index) in textList" :key="index">
                 <div class="user chat">
                   <div>
@@ -46,6 +47,7 @@ import { useRoute } from 'vue-router'
 import { axiosConfig } from '@/axios/axios.config'
 import SideBar from '@/views/side-bar/SideBar.vue'
 import { Avatar } from '@element-plus/icons-vue'
+import PromptCard from '@/views/chat/PromptCard.vue'
 
 const route = useRoute()
 

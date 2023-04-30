@@ -5,7 +5,7 @@
         ><Location
       /></el-icon>
     </main>
-    <div v-show="isShow">
+    <div :class="{ show_off: isShow }">
       <el-icon :size="40"><icon-menu /></el-icon>
       <el-icon :size="40"><Document /></el-icon>
       <el-icon :size="40"><setting /></el-icon>
@@ -32,5 +32,9 @@ const mouseenter = () => {
 <style scoped lang="scss">
 main:hover {
   cursor: pointer;
+}
+
+.show_off {
+  opacity: 0;
 }
 </style>
