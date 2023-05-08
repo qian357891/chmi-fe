@@ -1,7 +1,9 @@
 <template>
   <el-row class="tac">
     <el-col :span="24">
-      <h3 class="mb-2" style="padding-left: 25px"><RouterLink to="/">AI养生宝</RouterLink></h3>
+      <h3 class="mb-2" style="padding-left: 25px">
+        <RouterLink to="/">AI养生宝</RouterLink>
+      </h3>
       <el-menu class="menu">
         <header>
           <RouterLink to="/">
@@ -11,9 +13,18 @@
             </el-menu-item>
           </RouterLink>
 
+          <el-menu-item @click="gotoNeo4j">
+            <el-icon>
+            <Opportunity />
+            </el-icon>
+            知识图谱
+          </el-menu-item>
+
           <RouterLink to="/chat?content=">
             <el-menu-item>
-              <el-icon><setting /></el-icon>
+              <el-icon>
+                <setting />
+              </el-icon>
               在线智能AI问诊
             </el-menu-item>
           </RouterLink>
@@ -35,6 +46,10 @@ import {
   Setting
 } from '@element-plus/icons-vue'
 import DiaLog from './DiaLog.vue'
+
+function gotoNeo4j() {
+  window.open('http://localhost:7474',"_blank")
+}
 </script>
 
 <style scoped lang="scss">

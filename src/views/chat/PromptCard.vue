@@ -17,9 +17,9 @@
           <el-icon :size="25"><Compass /></el-icon>
           <span>能力</span>
         </div>
-        <el-card shadow="never"> 在之前的谈话中， 记住用户说了什么 </el-card>
-        <el-card shadow="never"> 进行快速、专业的医疗咨询 </el-card>
-        <el-card shadow="never"> 拒绝不当请求 </el-card>
+        <el-card shadow="never" class="card"> 在之前的谈话中， 记住用户说了什么 </el-card>
+        <el-card shadow="never" class="card"> 进行快速、专业的医疗咨询 </el-card>
+        <el-card shadow="never" class="card"> 拒绝不当请求 </el-card>
       </el-col>
 
       <el-col :span="8" class="space-y-4">
@@ -30,8 +30,8 @@
         <el-card shadow="never" class="card">
           该系统不能代表权威信息，请勿将该系统代替医疗问诊
         </el-card>
-        <el-card shadow="never"> 一个问题可能需要多轮对话才会理解 </el-card>
-        <el-card shadow="never"> 信息可能不具有时效性 </el-card>
+        <el-card shadow="never" class="card"> 一个问题可能需要多轮对话才会理解 </el-card>
+        <el-card shadow="never" class="card"> 信息可能不具有时效性 </el-card>
       </el-col>
     </el-row>
   </div>

@@ -8,8 +8,8 @@ import AboutView from './AboutView.vue'
     <!-- Hero -->
     <section class="et-hero-tabs">
       <h1>
-        <img src="../components/icons/boot.svg" width="80" style="position: relative; top: 10px" />
-        <span> AI养生宝</span>
+        <img src="../components/icons/boot1.svg" width="80" style="position: relative; top: 10px" />
+        <span style="color: darkgoldenrod;"> AI养生宝</span>
       </h1>
       <!-- 搜索框 -->
       <main class="search">
